@@ -95,5 +95,5 @@ func _update_camera_bob(delta: float) -> void:
 		bob_pivot.position.y = lerpf(bob_pivot.position.y, -target_bob_y, 0.1)
 			
 	else:
-		bob_pivot.position.x = lerpf(bob_pivot.position.x, 0.0, 0.1)
-		bob_pivot.position.y = lerpf(bob_pivot.position.y, 0.0, 0.1)
+		bob_pivot.position.x = lerpf(bob_pivot.position.x, 0.0, 0.2)
+		bob_pivot.position.y = lerpf(bob_pivot.position.y, 0.0, 0.2)

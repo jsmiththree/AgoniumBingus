@@ -61,10 +61,4 @@ material = SubResource("StandardMaterial3D_mq1bj")
 [node name="PlayerController" parent="." instance=ExtResource("2_au00k")]
 
 [node name="TestInteractionLever" parent="." instance=ExtResource("4_mq1bj")]
-transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -0.771767, 1.3712, -2.91855)
-
-[node name="TestInteractionLever2" parent="." instance=ExtResource("4_mq1bj")]
-transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -0.527348, 1.3712, -2.91855)
-
-[node name="TestInteractionLever3" parent="." instance=ExtResource("4_mq1bj")]
-transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -0.283874, 1.3712, -2.91855)
+transform = Transform3D(-1.2, 0, 1.04907e-07, 0, 1.2, 0, -1.04907e-07, 0, -1.2, -0.771767, 1.3712, 3.08145)
