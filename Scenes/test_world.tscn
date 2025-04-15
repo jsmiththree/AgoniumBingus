@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dfqybrnc8owxn"]
+[gd_scene load_steps=9 format=3 uid="uid://dfqybrnc8owxn"]
 
 [ext_resource type="Texture2D" uid="uid://cw8onk3x0gofi" path="res://Assets/Textures/Prototyping/Grid/Dark/texture_08.png" id="1_skmq4"]
+[ext_resource type="Texture2D" uid="uid://cmir6g5qoiu65" path="res://Assets/Textures/Prototyping/Grid/Purple/texture_09.png" id="2_707cn"]
 [ext_resource type="PackedScene" uid="uid://dk2tkf0ldrdy7" path="res://Scenes/Player/player_controller.tscn" id="2_au00k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_au00k"]
@@ -20,6 +21,10 @@ glow_enabled = true
 albedo_texture = ExtResource("1_skmq4")
 uv1_triplanar = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mq1bj"]
+albedo_texture = ExtResource("2_707cn")
+uv1_triplanar = true
+
 [node name="TestWorld" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -36,5 +41,20 @@ use_collision = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0498193, 0)
 size = Vector3(20, 0.1, 20)
 material = SubResource("StandardMaterial3D_au00k")
+
+[node name="ObstacleShape" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+radius = 1.0
+material = SubResource("StandardMaterial3D_mq1bj")
+
+[node name="ObstacleShape2" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6)
+radius = 1.0
+material = SubResource("StandardMaterial3D_mq1bj")
+
+[node name="ObstacleShape3" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -6)
+radius = 1.0
+material = SubResource("StandardMaterial3D_mq1bj")
 
 [node name="PlayerController" parent="." instance=ExtResource("2_au00k")]
