@@ -1,0 +1,135 @@
+[gd_scene load_steps=16 format=3 uid="uid://dc1y60g23sa7"]
+
+[ext_resource type="Script" uid="uid://bpbippckgsxj8" path="res://Scenes/Modules/interaction_module_lever.gd" id="1_aw07m"]
+[ext_resource type="PackedScene" uid="uid://dqd2dyb2c770m" path="res://Scenes/Controllers/interact_point_controller.tscn" id="1_hyamo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_igbj6"]
+albedo_color = Color(0.2484, 0.2484, 0.2484, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hyamo"]
+material = SubResource("StandardMaterial3D_igbj6")
+size = Vector3(0.2, 0.4, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aw07m"]
+albedo_color = Color(0.0562916, 0.0562916, 0.0562916, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0wloj"]
+material = SubResource("StandardMaterial3D_aw07m")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.15
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g4yb1"]
+albedo_color = Color(0.470076, 0.470076, 0.470076, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_28yvi"]
+material = SubResource("StandardMaterial3D_g4yb1")
+top_radius = 0.01
+bottom_radius = 0.01
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_asrhg"]
+albedo_color = Color(0.577583, 0.171192, 0.121557, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_t6m6i"]
+material = SubResource("StandardMaterial3D_asrhg")
+top_radius = 0.02
+bottom_radius = 0.02
+height = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_aw07m"]
+radius = 0.1
+
+[sub_resource type="Animation" id="Animation_3nshn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LeverBase/LeverPIvot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.309, -3.43166e-15, 1.5708)]
+}
+
+[sub_resource type="Animation" id="Animation_0xbc8"]
+resource_name = "lever_switch_off"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LeverBase/LeverPIvot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-1.309, -3.43166e-15, 1.5708), Vector3(-1.0472, -3.06075e-15, 1.5708), Vector3(1.309, -6.98025e-15, 1.5708)]
+}
+
+[sub_resource type="Animation" id="Animation_8s3hn"]
+resource_name = "lever_switch_on"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LeverBase/LeverPIvot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1.309, -6.98025e-15, 1.5708), Vector3(1.0472, -1.07863e-14, 1.5708), Vector3(-1.309, -3.43166e-15, 1.5708)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qgbqx"]
+_data = {
+&"RESET": SubResource("Animation_3nshn"),
+&"lever_switch_off": SubResource("Animation_0xbc8"),
+&"lever_switch_on": SubResource("Animation_8s3hn")
+}
+
+[node name="InteractionModuleLever" type="Node3D"]
+script = ExtResource("1_aw07m")
+
+[node name="LeverBase" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_hyamo")
+
+[node name="LeverPIvot" type="MeshInstance3D" parent="LeverBase"]
+transform = Transform3D(-3.61999e-06, -1, -8.88169e-16, 0.258816, -9.36912e-07, 0.965927, -0.965927, 3.49664e-06, 0.258816, 0, 0, 0.0499112)
+mesh = SubResource("CylinderMesh_0wloj")
+
+[node name="LeverArm" type="MeshInstance3D" parent="LeverBase/LeverPIvot"]
+transform = Transform3D(1, -4.37114e-08, 4.37114e-08, -4.37114e-08, -4.37114e-08, 1, -4.37114e-08, -1, -4.37114e-08, 0, -0.04, 0.1)
+mesh = SubResource("CylinderMesh_28yvi")
+
+[node name="LeverArm2" type="MeshInstance3D" parent="LeverBase/LeverPIvot"]
+transform = Transform3D(1, -4.37114e-08, 4.37114e-08, -4.37114e-08, -4.37114e-08, 1, -4.37114e-08, -1, -4.37114e-08, 0, 0.04, 0.1)
+mesh = SubResource("CylinderMesh_28yvi")
+
+[node name="LeverHandle" type="MeshInstance3D" parent="LeverBase/LeverPIvot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.147556)
+mesh = SubResource("CylinderMesh_t6m6i")
+
+[node name="InteractPointController" parent="LeverBase/LeverPIvot/LeverHandle" instance=ExtResource("1_hyamo")]
+unique_name_in_owner = true
+transform = Transform3D(-4.37114e-08, 0.258819, -0.965926, -1, -1.13133e-08, 4.2222e-08, -8.56848e-16, 0.965926, 0.258819, 0, 0, 0)
+prompt_messages = Array[String](["Turn On", "Turn Off"])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeverBase/LeverPIvot/LeverHandle/InteractPointController"]
+shape = SubResource("SphereShape3D_aw07m")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_qgbqx")
+}
+
+[connection signal="interaction_triggered" from="LeverBase/LeverPIvot/LeverHandle/InteractPointController" to="." method="_on_interact_point_controller_interaction_triggered"]

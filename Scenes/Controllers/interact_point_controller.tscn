@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqd2dyb2c770m"]
+
+[ext_resource type="Script" uid="uid://dtutuig81wr2l" path="res://Scenes/Controllers/interact_point_controller.gd" id="1_20jhe"]
+
+[node name="InteractPointController" type="Area3D"]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_20jhe")

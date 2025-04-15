@@ -14,6 +14,7 @@ var acceleration : float #= 0.2
 var deceleration : float #= 0.4
 
 var _has_jumped : bool = false
+var _is_falling : bool = false
 var _is_crouching : bool = false
 
 func _ready() -> void:
@@ -21,8 +22,12 @@ func _ready() -> void:
 	camera.fov = GlobalVar.first_person_fov
 
 func _physics_process(_delta: float) -> void:
-	if is_on_floor():
+	if !is_on_floor() && velocity.y < 0.0: _is_falling = true
+	
+	if is_on_floor() && _is_falling:
+		camera_controller.trigger_camera_jump_bounce()
 		_has_jumped = false
+		_is_falling = false
 
 
 func update_gravity(delta: float) -> void:

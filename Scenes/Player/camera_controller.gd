@@ -3,7 +3,10 @@ class_name CameraController
 
 @export var mouse_sensitivity : float = 0.1
 
+@onready var bounce_pivot: Node3D = %BouncePivot
+@onready var rotation_pivot: Node3D = %RotationPivot
 @onready var bob_pivot: Node3D = %BobPivot
+@onready var camera: Camera3D = %Camera3D
 
 var camera_tilt_lower_limit : float = deg_to_rad(-90.0)
 var camera_tilt_upper_limit : float = deg_to_rad(90.0)
@@ -37,7 +40,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	_update_camera_bob(delta)
-	
+	_update_camera_movement(delta)
+
+func _update_camera_movement(delta: float) -> void:
 	_mouse_rotation.x += _tilt_input * delta
 	_mouse_rotation.x  = clamp(_mouse_rotation.x, camera_tilt_lower_limit, camera_tilt_upper_limit)
 	_mouse_rotation.y += _rotation_input * delta
@@ -46,8 +51,8 @@ func _physics_process(delta: float) -> void:
 	_camera_rotation = Vector3(_mouse_rotation.x, 0.0, 0.0)
 	
 	## apply vertical camera rotation
-	transform.basis = Basis.from_euler(_camera_rotation)
-	rotation.z = 0.0
+	rotation_pivot.transform.basis = Basis.from_euler(_camera_rotation)
+	rotation_pivot.rotation.z = 0.0
 	
 	## apply horizontal camera rotation to player body
 	player.global_transform.basis = Basis.from_euler(_player_rotation)
@@ -62,6 +67,12 @@ func set_camera_bob(enabled: bool = false, speed: float = 2.5, rate: float = 2.0
 	bob_rate = rate
 	max_bob_width = width
 	max_bob_height = height
+
+func trigger_camera_jump_bounce(_drop_strength: float = 0.08) -> void:
+	var tween : Tween = create_tween()
+	_drop_strength = abs(_drop_strength)
+	tween.tween_property(bounce_pivot, 'position:y', -_drop_strength, 0.05)
+	tween.tween_property(bounce_pivot, 'position:y', 0.0, 0.2)
 
 func _update_camera_bob(delta: float) -> void:
 	# Define the minimum reduction factor

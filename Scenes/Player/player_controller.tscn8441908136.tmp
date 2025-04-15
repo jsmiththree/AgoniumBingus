@@ -200,35 +200,12 @@ script = ExtResource("4_icmko")
 [node name="InteractPrompt" type="CanvasLayer" parent="CameraController/BouncePivot/RotationPivot/BobPivot/Camera3D/InteractionController"]
 
 [node name="PromptLabel" type="Label" parent="CameraController/BouncePivot/RotationPivot/BobPivot/Camera3D/InteractionController/InteractPrompt"]
-unique_name_in_owner = true
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
 offset_top = 64.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 1152.0
+offset_bottom = 648.0
 text = "Interact [E]"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="CrosshairContainer" type="CenterContainer" parent="CameraController/BouncePivot/RotationPivot/BobPivot/Camera3D/InteractionController/InteractPrompt"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Outline" type="ColorRect" parent="CameraController/BouncePivot/RotationPivot/BobPivot/Camera3D/InteractionController/InteractPrompt/CrosshairContainer"]
-custom_minimum_size = Vector2(5, 5)
-layout_mode = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 0.588235)
-
-[node name="Crosshair" type="ColorRect" parent="CameraController/BouncePivot/RotationPivot/BobPivot/Camera3D/InteractionController/InteractPrompt/CrosshairContainer"]
-custom_minimum_size = Vector2(3, 3)
-layout_mode = 2
-mouse_filter = 2
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
 script = ExtResource("3_kfrkp")
