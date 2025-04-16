@@ -163,8 +163,8 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_e8nv0")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_22bme"]
-radius = 0.0924499
-height = 0.376481
+radius = 0.114029
+height = 0.471875
 
 [node name="InteractionModuleLever" type="Node3D"]
 script = ExtResource("1_aw07m")
@@ -176,7 +176,7 @@ libraries = {
 }
 
 [node name="Lever" type="Node3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+transform = Transform3D(0.06, 0, 0, 0, 0.06, 0, 0, 0, 0.06, 0, 0, 0)
 
 [node name="WallConnector" type="MeshInstance3D" parent="Lever"]
 transform = Transform3D(0.852846, 0, 0, 0, 1, -0.00242494, 0, 0.00225356, 1.07605, -0.848566, -2.25472, -0.098596)
@@ -190,7 +190,7 @@ skeleton = NodePath("")
 
 [node name="InteractPointController" parent="Lever/Lever" instance=ExtResource("1_hyamo")]
 unique_name_in_owner = true
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 2.31117, 0)
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 2.02944, 0)
 prompt_messages = Array[String](["Turn Off", "Turn On"])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Lever/Lever/InteractPointController"]
