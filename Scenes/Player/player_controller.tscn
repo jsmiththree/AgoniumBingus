@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://dk2tkf0ldrdy7"]
+[gd_scene load_steps=17 format=3 uid="uid://dk2tkf0ldrdy7"]
 
 [ext_resource type="Script" uid="uid://dw8rmdnrmi1sm" path="res://Scenes/Player/player_controller.gd" id="1_k0pio"]
+[ext_resource type="PackedScene" uid="uid://bntgiurflnc3t" path="res://Scenes/Player/player_ui_controller.tscn" id="2_kkda2"]
 [ext_resource type="Script" uid="uid://budjn4hv2cb7i" path="res://Scenes/Player/camera_controller.gd" id="2_r5hck"]
 [ext_resource type="Script" uid="uid://cbfoht08xcyi6" path="res://Scripts/StateMachine/state_machine.gd" id="3_kfrkp"]
 [ext_resource type="Script" uid="uid://db8cfnri6k31c" path="res://Scenes/Player/PlayerStates/player_state_idle.gd" id="3_veqsw"]
@@ -155,6 +156,11 @@ _data = {
 
 [node name="PlayerController" type="CharacterBody3D"]
 script = ExtResource("1_k0pio")
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="PlayerUIController" parent="UILayer" instance=ExtResource("2_kkda2")]
+unique_name_in_owner = true
 
 [node name="DebugPanel" type="CanvasLayer" parent="."]
 script = ExtResource("6_uta3u")

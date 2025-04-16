@@ -7,6 +7,7 @@ class_name PlayerController
 @onready var camera: Camera3D = %Camera3D
 @onready var camera_controller: Node3D = %CameraController
 @onready var animation: AnimationPlayer = %AnimationPlayer
+@onready var ui_controller: PlayerUIController = %PlayerUIController
 
 var current_state : String
 var move_speed : float #= 4.0

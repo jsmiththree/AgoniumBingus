@@ -20,7 +20,6 @@ var _player_rotation : Vector3
 var _camera_rotation : Vector3
 var _is_camera_kickback : bool = false
 var _kickback_strength : float = 0.0
-var _target_kickback_strength : float = 0.0
 
 var player : PlayerController
 
@@ -47,15 +46,12 @@ func _physics_process(delta: float) -> void:
 	_update_camera_movement(delta)
 
 func _update_camera_movement(delta: float) -> void:
-	## set kickback for vertical recoil
-	if _is_camera_kickback: _kickback_strength = _target_kickback_strength
-	
 	## set and clamp horizontal mouse movement
 	_mouse_rotation.x += (_tilt_input + _kickback_strength) * delta
 	_mouse_rotation.x  = clamp(_mouse_rotation.x, camera_tilt_lower_limit, camera_tilt_upper_limit)
 	
 	## adjust kickback for horizontal recoil
-	_kickback_strength = _kickback_strength * 0.3
+	_kickback_strength = _kickback_strength * 0.2
 	
 	## set vertical mouse movement
 	_mouse_rotation.y += (_rotation_input + _kickback_strength * GlobalFunc.random_negative()) * delta
@@ -79,9 +75,9 @@ func _update_camera_movement(delta: float) -> void:
 	_rotation_input = 0.0
 	_tilt_input = 0.0
 
+
 func set_camera_bob(enabled: bool = false, speed: float = 2.5, rate: float = 2.0, width: float = 0.15, height: float = 0.15) -> void:
 	bob_enabled = enabled
-	
 	bob_speed = speed
 	bob_rate = rate
 	max_bob_width = width
@@ -90,10 +86,10 @@ func set_camera_bob(enabled: bool = false, speed: float = 2.5, rate: float = 2.0
 
 func trigger_camera_kickback() -> void:
 	_is_camera_kickback = true
-	_target_kickback_strength = 2.0
+	_kickback_strength = 2.0
 
 
-func trigger_camera_jump_bounce(_drop_strength: float = 0.08) -> void:
+func trigger_camera_jump_bounce(_drop_strength: float = 0.1) -> void:
 	var tween : Tween = create_tween()
 	_drop_strength = abs(_drop_strength)
 	tween.tween_property(bounce_pivot, 'position:y', -_drop_strength, 0.05)
