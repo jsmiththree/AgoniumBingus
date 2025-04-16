@@ -5,7 +5,8 @@ class_name CameraController
 
 @onready var bounce_pivot: Node3D = %BouncePivot
 @onready var rotation_pivot: Node3D = %RotationPivot
-@onready var bob_pivot: Node3D = %BobPivot
+@onready var camera_bob_pivot: Node3D = %CameraBobPivot
+@onready var weapon_bob_pivot: Node3D = %WeaponBobPivot
 @onready var camera: Camera3D = %Camera3D
 
 var camera_tilt_lower_limit : float = deg_to_rad(-90.0)
@@ -91,9 +92,15 @@ func _update_camera_bob(delta: float) -> void:
 		var target_bob_x: float = max_bob_width * sin(time_passed * bob_rate) * bob_factor
 		var target_bob_y: float = max_bob_height * pow(sin(time_passed * bob_rate), 2) * bob_factor
 
-		bob_pivot.position.x = lerpf(bob_pivot.position.x, target_bob_x, 0.1)
-		bob_pivot.position.y = lerpf(bob_pivot.position.y, -target_bob_y, 0.1)
+		weapon_bob_pivot.position.x = lerpf(weapon_bob_pivot.position.x, target_bob_x * 0.5, 0.1)
+		weapon_bob_pivot.position.y = lerpf(weapon_bob_pivot.position.y, -target_bob_y * 0.5, 0.1)
+
+		camera_bob_pivot.position.x = lerpf(camera_bob_pivot.position.x, target_bob_x, 0.1)
+		camera_bob_pivot.position.y = lerpf(camera_bob_pivot.position.y, -target_bob_y, 0.1)
 			
 	else:
-		bob_pivot.position.x = lerpf(bob_pivot.position.x, 0.0, 0.2)
-		bob_pivot.position.y = lerpf(bob_pivot.position.y, 0.0, 0.2)
+		weapon_bob_pivot.position.x = lerpf(weapon_bob_pivot.position.x, 0.0, 0.2)
+		weapon_bob_pivot.position.y = lerpf(weapon_bob_pivot.position.y, 0.0, 0.2)
+		
+		camera_bob_pivot.position.x = lerpf(camera_bob_pivot.position.x, 0.0, 0.2)
+		camera_bob_pivot.position.y = lerpf(camera_bob_pivot.position.y, 0.0, 0.2)

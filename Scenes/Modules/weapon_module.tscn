@@ -1,0 +1,109 @@
+[gd_scene load_steps=10 format=3 uid="uid://cj4tyrcoxs2rh"]
+
+[ext_resource type="Script" uid="uid://bkpved4xuchl4" path="res://Scenes/Modules/weapon_module.gd" id="1_1cfao"]
+[ext_resource type="PackedScene" uid="uid://p4shcdilbrjc" path="res://Scenes/Effects/muzzle_flash_particle.tscn" id="2_ibthh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uuwg4"]
+albedo_color = Color(0.509286, 0.509286, 0.509286, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xq8rw"]
+material = SubResource("StandardMaterial3D_uuwg4")
+size = Vector3(0.04, 0.06, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_et0vs"]
+albedo_color = Color(0.356614, 0.264646, 0.0772406, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f3a6g"]
+material = SubResource("StandardMaterial3D_et0vs")
+size = Vector3(0.03, 0.1, 0.03)
+
+[sub_resource type="Animation" id="Animation_xq8rw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Handgun/AnimationPivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Handgun/AnimationPivot:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_uuwg4"]
+resource_name = "weapon_fire"
+length = 1.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Handgun/AnimationPivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4, 0.6, 1, 1.5, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0.429543, 0, 0), Vector3(0.429543, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0.174533, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Handgun/AnimationPivot:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.0203572), Vector3(0, 0, 0.0180953), Vector3(0, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xq8rw"]
+_data = {
+&"RESET": SubResource("Animation_xq8rw"),
+&"weapon_fire": SubResource("Animation_uuwg4")
+}
+
+[node name="WeaponModuleHandgun" type="Node3D"]
+script = ExtResource("1_1cfao")
+muzzle_flash_particle = ExtResource("2_ibthh")
+
+[node name="Handgun" type="Node3D" parent="."]
+
+[node name="AnimationPivot" type="Node3D" parent="Handgun"]
+
+[node name="Barrel" type="MeshInstance3D" parent="Handgun/AnimationPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0759159, -0.0648998)
+mesh = SubResource("BoxMesh_xq8rw")
+skeleton = NodePath("../../..")
+
+[node name="Handle" type="MeshInstance3D" parent="Handgun/AnimationPivot/Barrel"]
+transform = Transform3D(1, 0, 0, 0, 0.954016, 0.299757, 0, -0.299757, 0.954016, 0, -0.0281767, 0.103362)
+mesh = SubResource("BoxMesh_f3a6g")
+skeleton = NodePath("../../../..")
+
+[node name="MuzzleFlashOrigin" type="Marker3D" parent="Handgun"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0917106, -0.167729)
+gizmo_extents = 0.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_xq8rw")
+}

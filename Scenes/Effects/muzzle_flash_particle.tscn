@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://p4shcdilbrjc"]
+
+[ext_resource type="Texture2D" uid="uid://di1v0mq84scta" path="res://Assets/Sprites/Effects/muzzle_flash.png" id="1_psuhu"]
+[ext_resource type="Script" uid="uid://clrbbsrwvuohv" path="res://Scenes/Effects/muzzle_flash_particle.gd" id="2_gnjqf"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gnjqf"]
+angle_min = -60.0
+angle_max = 60.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r5wrd"]
+transparency = 4
+albedo_texture = ExtResource("1_psuhu")
+emission_enabled = true
+emission = Color(1, 0.862803, 0.18566, 1)
+emission_energy_multiplier = 2.0
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+disable_receive_shadows = true
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_5p2an"]
+material = SubResource("StandardMaterial3D_r5wrd")
+size = Vector2(0.5, 0.6)
+
+[node name="MuzzleFlashParticle" type="GPUParticles3D"]
+emitting = false
+amount = 1
+lifetime = 0.1
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_gnjqf")
+draw_pass_1 = SubResource("QuadMesh_5p2an")
+script = ExtResource("2_gnjqf")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dk2tkf0ldrdy7"]
+[gd_scene load_steps=16 format=3 uid="uid://dk2tkf0ldrdy7"]
 
 [ext_resource type="Script" uid="uid://dw8rmdnrmi1sm" path="res://Scenes/Player/player_controller.gd" id="1_k0pio"]
 [ext_resource type="Script" uid="uid://budjn4hv2cb7i" path="res://Scenes/Player/camera_controller.gd" id="2_r5hck"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://db8cfnri6k31c" path="res://Scenes/Player/PlayerStates/player_state_idle.gd" id="3_veqsw"]
 [ext_resource type="Script" uid="uid://cmq0pxur8e4gx" path="res://Scenes/Player/interaction_controller.gd" id="4_icmko"]
 [ext_resource type="Script" uid="uid://dk5kchaswehre" path="res://Scenes/Player/PlayerStates/player_state_ground_movement.gd" id="5_gym7l"]
+[ext_resource type="Script" uid="uid://dc1vjw42qgse0" path="res://Scenes/Player/weapon_controller.gd" id="5_sj6w7"]
+[ext_resource type="PackedScene" uid="uid://cj4tyrcoxs2rh" path="res://Scenes/Modules/weapon_module.tscn" id="5_wvxe2"]
 [ext_resource type="Script" uid="uid://qbwwfwkdn8g3" path="res://Scenes/Player/debug_panel.gd" id="6_uta3u"]
 [ext_resource type="Script" uid="uid://cnbes6qq4k7i7" path="res://Scenes/Player/PlayerStates/player_state_air_movement.gd" id="7_w6ygp"]
 
@@ -184,22 +186,23 @@ unique_name_in_owner = true
 [node name="RotationPivot" type="Node3D" parent="CameraController/BouncePivot"]
 unique_name_in_owner = true
 
-[node name="BobPivot" type="Node3D" parent="CameraController/BouncePivot/RotationPivot"]
+[node name="CameraBobPivot" type="Node3D" parent="CameraController/BouncePivot/RotationPivot"]
 unique_name_in_owner = true
 
-[node name="Camera3D" type="Camera3D" parent="CameraController/BouncePivot/RotationPivot/BobPivot"]
+[node name="Camera3D" type="Camera3D" parent="CameraController/BouncePivot/RotationPivot/CameraBobPivot"]
 unique_name_in_owner = true
 
-[node name="InteractionController" type="RayCast3D" parent="CameraController/BouncePivot/RotationPivot/BobPivot/Camera3D"]
+[node name="InteractionController" type="RayCast3D" parent="CameraController/BouncePivot/RotationPivot/CameraBobPivot/Camera3D"]
 target_position = Vector3(0, 0, -1)
 collision_mask = 16
 collide_with_areas = true
 collide_with_bodies = false
+debug_shape_thickness = 1
 script = ExtResource("4_icmko")
 
-[node name="InteractPrompt" type="CanvasLayer" parent="CameraController/BouncePivot/RotationPivot/BobPivot/Camera3D/InteractionController"]
+[node name="InteractPrompt" type="CanvasLayer" parent="CameraController/BouncePivot/RotationPivot/CameraBobPivot/Camera3D/InteractionController"]
 
-[node name="PromptLabel" type="Label" parent="CameraController/BouncePivot/RotationPivot/BobPivot/Camera3D/InteractionController/InteractPrompt"]
+[node name="PromptLabel" type="Label" parent="CameraController/BouncePivot/RotationPivot/CameraBobPivot/Camera3D/InteractionController/InteractPrompt"]
 unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
@@ -213,7 +216,7 @@ text = "Interact [E]"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CrosshairContainer" type="CenterContainer" parent="CameraController/BouncePivot/RotationPivot/BobPivot/Camera3D/InteractionController/InteractPrompt"]
+[node name="CrosshairContainer" type="CenterContainer" parent="CameraController/BouncePivot/RotationPivot/CameraBobPivot/Camera3D/InteractionController/InteractPrompt"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -221,16 +224,29 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Outline" type="ColorRect" parent="CameraController/BouncePivot/RotationPivot/BobPivot/Camera3D/InteractionController/InteractPrompt/CrosshairContainer"]
+[node name="Outline" type="ColorRect" parent="CameraController/BouncePivot/RotationPivot/CameraBobPivot/Camera3D/InteractionController/InteractPrompt/CrosshairContainer"]
 custom_minimum_size = Vector2(5, 5)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.588235)
 
-[node name="Crosshair" type="ColorRect" parent="CameraController/BouncePivot/RotationPivot/BobPivot/Camera3D/InteractionController/InteractPrompt/CrosshairContainer"]
+[node name="Crosshair" type="ColorRect" parent="CameraController/BouncePivot/RotationPivot/CameraBobPivot/Camera3D/InteractionController/InteractPrompt/CrosshairContainer"]
 custom_minimum_size = Vector2(3, 3)
 layout_mode = 2
 mouse_filter = 2
+
+[node name="WeaponController" type="Node3D" parent="CameraController/BouncePivot/RotationPivot/CameraBobPivot/Camera3D" node_paths=PackedStringArray("weapon")]
+script = ExtResource("5_sj6w7")
+weapon = NodePath("WeaponBobPivot/WeaponModule")
+
+[node name="WeaponBobPivot" type="Node3D" parent="CameraController/BouncePivot/RotationPivot/CameraBobPivot/Camera3D/WeaponController"]
+unique_name_in_owner = true
+
+[node name="WeaponModule" parent="CameraController/BouncePivot/RotationPivot/CameraBobPivot/Camera3D/WeaponController/WeaponBobPivot" instance=ExtResource("5_wvxe2")]
+transform = Transform3D(1.99679, 0.0723528, -0.0871416, -0.0743912, 1.9981, -0.0456272, 0.085408, 0.0487954, 1.99758, 0.584698, -0.368239, -0.605813)
+
+[node name="WeaponAimCast" type="RayCast3D" parent="CameraController/BouncePivot/RotationPivot/CameraBobPivot/Camera3D/WeaponController"]
+target_position = Vector3(0, 0, -100)
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
 script = ExtResource("3_kfrkp")

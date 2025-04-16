@@ -18,7 +18,7 @@ var _is_falling : bool = false
 var _is_crouching : bool = false
 
 func _ready() -> void:
-	## set player camera fov
+	GlobalVar.player = self
 	camera.fov = GlobalVar.first_person_fov
 
 func _physics_process(_delta: float) -> void:
