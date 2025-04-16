@@ -1,7 +1,12 @@
 extends Node
 
-@export var period = 0.15
+@export var period = 0.1
 @export var magnitude = 0.05
+
+func random_negative() -> int:
+	var _coin_flip : int = randi_range(0, 1)
+	if _coin_flip == 0: return -1
+	return 1
 
 func camera_shake(camera: Camera3D):
 	var initial_transform = camera.transform 

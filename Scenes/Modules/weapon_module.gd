@@ -14,6 +14,8 @@ func fire_weapon() -> void:
 	
 	GlobalFunc.camera_shake(GlobalVar.player.camera)
 	
+	GlobalVar.player.camera_controller.trigger_camera_kickback()
+	
 	var muzzle_flash : GPUParticles3D = muzzle_flash_particle.instantiate()
 	muzzle_flash_origin.add_child(muzzle_flash)
 	muzzle_flash.emitting = true
