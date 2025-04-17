@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbwhteywq55ty"]
+
+[ext_resource type="Script" uid="uid://dob1fjn3s8buj" path="res://Scripts/Globals/global_audio.gd" id="1_h3e3m"]
+[ext_resource type="AudioStream" uid="uid://c0a5ulogqr7h4" path="res://Assets/Sounds/pistol_shot01.wav" id="1_hrqw5"]
+[ext_resource type="AudioStream" uid="uid://c0jh5b53j2hwj" path="res://Assets/Sounds/pistol_eject_mag.wav" id="3_f1rec"]
+[ext_resource type="AudioStream" uid="uid://ceb21y6vavt2h" path="res://Assets/Sounds/pistol_load_mag.wav" id="4_tggco"]
+
+[node name="GlobalAudio" type="Node"]
+script = ExtResource("1_h3e3m")
+
+[node name="Pistol" type="Node" parent="."]
+
+[node name="PistolShot" type="AudioStreamPlayer" parent="Pistol"]
+unique_name_in_owner = true
+stream = ExtResource("1_hrqw5")
+bus = &"Sound"
+
+[node name="PistolMagEject" type="AudioStreamPlayer" parent="Pistol"]
+unique_name_in_owner = true
+stream = ExtResource("3_f1rec")
+bus = &"Sound"
+
+[node name="PistolMagLoad" type="AudioStreamPlayer" parent="Pistol"]
+unique_name_in_owner = true
+stream = ExtResource("4_tggco")
+bus = &"Sound"

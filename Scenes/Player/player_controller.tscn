@@ -249,7 +249,7 @@ weapon = NodePath("WeaponBobPivot/WeaponModule")
 unique_name_in_owner = true
 
 [node name="WeaponModule" parent="CameraController/BouncePivot/RotationPivot/CameraBobPivot/Camera3D/WeaponController/WeaponBobPivot" instance=ExtResource("5_wvxe2")]
-transform = Transform3D(1.99845, -0.0380107, -0.0689761, 0.0367138, 1.9993, -0.038044, 0.0696751, 0.0367484, 1.99845, 0.378511, -0.368239, -0.605813)
+transform = Transform3D(1.98528, -0.0409991, -0.238732, 0.0367138, 1.9993, -0.038044, 0.239429, 0.0333816, 1.98534, 0.50865, -0.359032, -0.617418)
 
 [node name="WeaponAimCast" type="RayCast3D" parent="CameraController/BouncePivot/RotationPivot/CameraBobPivot/Camera3D/WeaponController"]
 target_position = Vector3(0, 0, -100)
