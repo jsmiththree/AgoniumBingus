@@ -8,7 +8,7 @@ class_name WeaponModule
 
 var magazine_size : int = 12
 var loaded_ammo : int = 12
-var total_ammo_pool : int = 36
+var total_ammo_pool : int = 999
 
 func _ready() -> void:
 	await owner.ready
