@@ -20,6 +20,7 @@ func camera_shake(camera: Camera3D):
 		)
 
 		camera.transform.origin = initial_transform.origin + offset
+		
 		elapsed_time += get_process_delta_time()
 		await get_tree().process_frame
 

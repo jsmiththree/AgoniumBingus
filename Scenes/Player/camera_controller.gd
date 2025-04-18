@@ -112,8 +112,12 @@ func _update_camera_bob(delta: float) -> void:
 		var target_bob_x: float = max_bob_width * sin(time_passed * bob_rate) * bob_factor
 		var target_bob_y: float = max_bob_height * pow(sin(time_passed * bob_rate), 2) * bob_factor
 
-		weapon_bob_pivot.position.x = lerpf(weapon_bob_pivot.position.x, target_bob_x * 0.5, 0.1)
-		weapon_bob_pivot.position.y = lerpf(weapon_bob_pivot.position.y, -target_bob_y * 0.5, 0.1)
+		if !GlobalVar.player.weapon_controller.aim_down_sights:
+			weapon_bob_pivot.position.x = lerpf(weapon_bob_pivot.position.x, target_bob_x * 0.5, 0.1)
+			weapon_bob_pivot.position.y = lerpf(weapon_bob_pivot.position.y, -target_bob_y * 0.5, 0.1)
+		else:
+			weapon_bob_pivot.position.x = lerpf(weapon_bob_pivot.position.x, 0.0, 0.5)
+			weapon_bob_pivot.position.y = lerpf(weapon_bob_pivot.position.y, 0.0, 0.5)
 
 		camera_bob_pivot.position.x = lerpf(camera_bob_pivot.position.x, target_bob_x, 0.1)
 		camera_bob_pivot.position.y = lerpf(camera_bob_pivot.position.y, -target_bob_y, 0.1)
