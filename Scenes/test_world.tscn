@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cmir6g5qoiu65" path="res://Assets/Textures/Prototyping/Grid/Purple/texture_09.png" id="2_707cn"]
 [ext_resource type="PackedScene" uid="uid://dk2tkf0ldrdy7" path="res://Scenes/Player/player_controller.tscn" id="2_au00k"]
 [ext_resource type="PackedScene" uid="uid://dc1y60g23sa7" path="res://Scenes/Modules/interaction_module_lever.tscn" id="4_mq1bj"]
-[ext_resource type="PackedScene" uid="uid://bi58tigbmmrxs" path="res://Scenes/Controllers/enemy_controller.tscn" id="5_iwv7r"]
+[ext_resource type="PackedScene" uid="uid://bi58tigbmmrxs" path="res://Scenes/Enemy/enemy_controller.tscn" id="5_iwv7r"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_au00k"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
