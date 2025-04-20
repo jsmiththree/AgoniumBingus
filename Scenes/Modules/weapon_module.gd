@@ -1,6 +1,8 @@
 extends Node3D
 class_name WeaponModule
 
+signal weapon_fired
+
 @export var muzzle_flash_particle : PackedScene
 
 @onready var animation : AnimationPlayer = %AnimationPlayer
@@ -19,10 +21,11 @@ func fire_weapon() -> void:
 	
 	if loaded_ammo > 0:
 		animation.play('fire', -1, 5.0)
+		emit_signal('weapon_fired')
 		
 		GlobalFunc.camera_shake(GlobalVar.player.camera)
 		
-		GlobalVar.player.camera_controller.trigger_camera_kickback()
+		GlobalVar.player.camera_controller.trigger_camera_kickback(2.0)
 		
 		var muzzle_flash : GPUParticles3D = muzzle_flash_particle.instantiate()
 		muzzle_flash_origin.add_child(muzzle_flash)
@@ -52,9 +55,11 @@ func reload_ammo_count() -> void:
 		
 	GlobalVar.player.ui_controller.set_ammo_count(loaded_ammo, magazine_size, total_ammo_pool)
 
+func _position_reset() -> void:
+	animation.play('RESET')
 
 func play_pistol_shot() -> void:
-	GlobalAudio.play_sound(GlobalAudio.pistol_shot, -10.0, 1.0, 1.3)
+	GlobalAudio.play_sound(GlobalAudio.pistol_shot, -8.0, 0.9, 1.0)
 func play_eject_mag() -> void:
 	GlobalAudio.play_sound(GlobalAudio.pistol_mag_eject, -10.0, 0.9, 1.1)
 func play_load_mag() -> void:

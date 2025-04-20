@@ -18,8 +18,11 @@ var _rotation_input : float
 var _tilt_input : float
 var _player_rotation : Vector3
 var _camera_rotation : Vector3
-var _is_camera_kickback : bool = false
-var _kickback_strength : float = 0.0
+
+var _kickback_tween : Tween
+var _recovery_tween : Tween
+
+var _kickback_strength : float
 
 var player : PlayerController
 
@@ -50,11 +53,8 @@ func _update_camera_movement(delta: float) -> void:
 	_mouse_rotation.x += (_tilt_input + _kickback_strength) * delta
 	_mouse_rotation.x  = clamp(_mouse_rotation.x, camera_tilt_lower_limit, camera_tilt_upper_limit)
 	
-	## adjust kickback for horizontal recoil
-	_kickback_strength = _kickback_strength * 0.2
-	
 	## set vertical mouse movement
-	_mouse_rotation.y += (_rotation_input + _kickback_strength * GlobalFunc.random_negative()) * delta
+	_mouse_rotation.y += (_rotation_input + (_kickback_strength * 0.3) * GlobalFunc.random_negative()) * delta
 	
 	## apply player mouse rotation
 	_player_rotation = Vector3(0.0, _mouse_rotation.y, 0.0)
@@ -69,9 +69,7 @@ func _update_camera_movement(delta: float) -> void:
 	## apply horizontal camera rotation to player body
 	player.global_transform.basis = Basis.from_euler(_player_rotation)
 	
-	## reset everything before next tick
-	_is_camera_kickback = false
-	_kickback_strength = 0.0
+	## reset before next tick
 	_rotation_input = 0.0
 	_tilt_input = 0.0
 
@@ -84,9 +82,20 @@ func set_camera_bob(enabled: bool = false, speed: float = 2.5, rate: float = 2.0
 	max_bob_height = height
 
 
-func trigger_camera_kickback() -> void:
-	_is_camera_kickback = true
-	_kickback_strength = 2.0
+func trigger_camera_kickback(_strength: float) -> void:
+	_kickback_strength = _strength
+	if _kickback_tween: 
+		_kickback_tween.stop()
+		_recovery_tween.stop()
+	_kickback_tween = create_tween()
+	_kickback_tween.tween_property(self, '_kickback_strength', 0.0, 0.1).set_ease(Tween.EASE_OUT)
+	_kickback_tween.tween_callback(trigger_kickback_recovery.bind(_strength))
+func trigger_kickback_recovery(_strength: float) -> void:
+	_kickback_strength = -_strength * 0.5
+	if _recovery_tween: 
+		_recovery_tween.stop()
+	_recovery_tween = create_tween()
+	_recovery_tween.tween_property(self, '_kickback_strength', 0.0, 0.1).set_ease(Tween.EASE_OUT)
 
 
 func trigger_camera_jump_bounce(_drop_strength: float = 0.1) -> void:
